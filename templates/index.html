@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Search Optimizer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <h1>Route / Score Optimizer</h1>
+  <p>Finds the best answer with <strong>Binary Search</strong> and compares it to a simple linear baseline.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>1. Enter the problem</h2>
+    <form id="form" novalidate>
+      <label for="problem">Problem type</label>
+      <select id="problem">
+        <option value="capacity">Delivery capacity – minimum daily capacity to ship all packages in D days</option>
+        <option value="speed">Work speed – minimum speed to finish all tasks in H hours</option>
+        <option value="spacing">Stop spacing – maximize the minimum distance between K stops</option>
+      </select>
+      <p id="help" class="hint"></p>
+
+      <label for="values" id="valuesLabel">Values</label>
+      <textarea id="values" rows="3" placeholder="e.g. 1,2,3,4,5,6,7,8,9,10"></textarea>
+
+      <label for="param" id="paramLabel">Days</label>
+      <input id="param" type="number" min="1" step="1">
+
+      <div class="row">
+        <button type="submit">Optimize</button>
+        <button type="button" id="example" class="secondary">Load example</button>
+      </div>
+      <ul id="errors" class="errors" hidden></ul>
+    </form>
+  </section>
+
+  <section class="card" id="resultCard" hidden>
+    <h2>2. Result</h2>
+    <div class="answer"><span id="answerLabel"></span><strong id="answer"></strong></div>
+    <p id="detail" class="hint"></p>
+
+    <h3>Algorithm comparison</h3>
+    <table class="cmp">
+      <thead><tr><th></th><th>Binary Search</th><th>Linear baseline</th></tr></thead>
+      <tbody>
+        <tr><td>Feasibility checks</td><td id="bsChecks"></td><td id="linChecks"></td></tr>
+        <tr><td>Time (ms)</td><td id="bsTime"></td><td id="linTime"></td></tr>
+        <tr><td>Same answer?</td><td colspan="2" id="match"></td></tr>
+      </tbody>
+    </table>
+    <div id="bars"></div>
+
+    <h3>Binary search steps</h3>
+    <div class="scroll">
+      <table class="steps">
+        <thead><tr><th>#</th><th>Low</th><th>High</th><th>Mid</th><th>Mid works?</th></tr></thead>
+        <tbody id="steps"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Recent runs</h2>
+    <div class="scroll">
+      <table class="steps">
+        <thead><tr><th>Time</th><th>Problem</th><th>Answer</th><th>BS checks</th><th>Linear checks</th></tr></thead>
+        <tbody id="history"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
